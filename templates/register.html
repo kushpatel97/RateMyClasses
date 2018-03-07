@@ -3,20 +3,23 @@
 
 {% block body %}
 <h1>Register</h1>
-    <form class="form-inline">
+    <form>
       <div class="form-group">
-        <label class="sr-only" for="exampleInputEmail3">Email address</label>
-        <input type="email" class="form-control" id="exampleInputEmail3" placeholder="Email">
+        <label>Username</label>
+        <input type="text" class="form-control" placeholder="Username">
       </div>
       <div class="form-group">
-        <label class="sr-only" for="exampleInputPassword3">Password</label>
-        <input type="password" class="form-control" id="exampleInputPassword3" placeholder="Password">
+        <label>Email Address</label>
+        <input type="email" class="form-control" placeholder="Email">
       </div>
-      <div class="checkbox">
-        <label>
-          <input type="checkbox"> Remember me
-        </label>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" class="form-control" placeholder="Password">
       </div>
-      <button type="submit" class="btn btn-default">Sign in</button>
+      <div class="form-group">
+        <label>Confirm Password</label>
+        <input type="password" class="form-control" placeholder="Confirm Password">
+      </div>
+      <button type="submit" class="btn btn-primary">Sign in</button>
     </form>
 {% endblock %}
