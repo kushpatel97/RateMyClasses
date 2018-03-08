@@ -3,23 +3,32 @@
 
 {% block body %}
 <h1>Register</h1>
-    <form>
+    <form action="/register" method="post">
       <div class="form-group">
         <label>Username</label>
-        <input type="text" class="form-control" placeholder="Username">
+        <input name="username" type="text" class="form-control" placeholder="Username">
       </div>
       <div class="form-group">
         <label>Email Address</label>
-        <input type="email" class="form-control" placeholder="Email">
+        <input name="email" type="email" class="form-control" placeholder="Email">
       </div>
       <div class="form-group">
         <label>Password</label>
-        <input type="password" class="form-control" placeholder="Password">
+        <input name="password" type="password" class="form-control" placeholder="Password">
       </div>
       <div class="form-group">
         <label>Confirm Password</label>
-        <input type="password" class="form-control" placeholder="Confirm Password">
+        <input name="con_password" type="password" class="form-control" placeholder="Confirm Password">
       </div>
       <button type="submit" class="btn btn-primary">Sign in</button>
     </form>
+
+    {% with messages = get_flashed_messages() %}
+       {% if messages %}
+          {% for message in messages %}
+             {{ message }}
+          {% endfor %}
+       {% endif %}
+    {% endwith %}
+
 {% endblock %}
