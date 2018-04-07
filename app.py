@@ -20,7 +20,7 @@ db = MySQL(app)
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return redirect(url_for('login'))
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -56,6 +56,7 @@ def register():
         username = str(request.form['username'])
         email = str(request.form['email'])
         password = str(request.form['password'])
+        major_name = str(request.form['major_name'])
         # con_password = str(request.form['con_password'])
 
         connection = db.connection
@@ -66,7 +67,8 @@ def register():
             flash('Username already exists', 'danger')
             return render_template('register.html')
 
-        cur.execute('INSERT INTO Users (Username, Email, Password) VALUES(%s, %s, %s)',(username, email,password))
+
+        cur.execute('INSERT INTO ratemyclass.Users (Username, Email, Password, major_name) VALUES (%s, %s, %s, %s)',(username, email, password, major_name))
 
         db.connection.commit()
 

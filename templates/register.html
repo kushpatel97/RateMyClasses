@@ -1,9 +1,37 @@
-{% extends "layout.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
 
+    <title>Rate My Classes | CS336</title>
+    <link href ="{{ url_for('static', filename='css/login.css') }}" rel="stylesheet">
+    <!--<link href ="{{ url_for('static', filename='css/bootstrap.css') }}" rel="stylesheet">-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
 
-{% block body %}
+<div class="login-page">
+
+  <div class="form">
+
+    <form class="register-form" action="/register" method="post">
+
+      <input name="username" type="text" class="form-control" placeholder="Username">
+      <input name="email" type="email" class="form-control" placeholder="Email">
+      <input name="major_name" type="text" class="form-control" placeholder="School Major">
+      <input name="password" type="password" class="form-control" placeholder="Password">
+
+      <button type="submit" class="btn btn-primary">Sign Up</button>
+      <p class="message">Already registered? <a href="{{ url_for('login') }}">Sign In</a></p>
+
+    </form>
+  </div>
+</div>
+
+<div class="login-page">
 <h1>Register</h1>
-    <form action="/register" method="post">
+    <form class="register-form" action="/register" method="post">
       <div class="form-group">
         <label>Username</label>
         <input name="username" type="text" class="form-control" placeholder="Username">
@@ -13,14 +41,17 @@
         <input name="email" type="email" class="form-control" placeholder="Email">
       </div>
       <div class="form-group">
+        <label>Major</label>
+        <input name="major_name" type="text" class="form-control" placeholder="School Major">
+      </div>
+      <div class="form-group">
         <label>Password</label>
         <input name="password" type="password" class="form-control" placeholder="Password">
       </div>
-      <div class="form-group">
-        <label>Confirm Password</label>
-        <input name="con_password" type="password" class="form-control" placeholder="Confirm Password">
-      </div>
-      <button type="submit" class="btn btn-primary">Sign in</button>
-    </form>
 
-{% endblock %}
+    </form>
+</div>
+
+</body>
+</html>
+
