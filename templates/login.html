@@ -4,28 +4,29 @@
     <meta charset="UTF-8">
 
     <title>Rate My Classes | CS336</title>
-
+    <link href ="{{ url_for('static', filename='css/login.css') }}" rel="stylesheet">
     <link href ="{{ url_for('static', filename='css/bootstrap.css') }}" rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>-->
+    <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
+
 </head>
 <body>
 
+<div class="login-page">
 
-
-<div class="container">
-    <h1>Login</h1>
-    <form method="post">
-      <div class="form-group">
-        <label>Email address</label>
-        <input name="email" type="email" class="form-control" placeholder="Email">
-      </div>
-      <div class="form-group">
-        <label>Password</label>
+  <div class="form">
+        <h1>Login</h1>
+    <form class="login-form" method="post">
+        <input name="username" type="text" class="form-control" placeholder="Username"/>
         <input name="password" type="password" class="form-control" placeholder="Password">
-      </div>
-      <button type="submit" class="btn btn-primary">Sign in</button>
+
+        <button type="submit">login</button>
+        <p class="message">Not registered? <a href="{{ url_for('register') }}">Create an account</a></p>
+
+    </form>
+  </div>
 </div>
+
 
 </body>
 </html>

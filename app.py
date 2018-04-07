@@ -26,13 +26,13 @@ def index():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        email = str(request.form['email'])
+        username = str(request.form['username'])
         password = str(request.form['password'])
 
         connection = db.connection
         cur = connection.cursor()
 
-        result = cur.execute('SELECT * FROM Users WHERE Email=%s', [email])
+        result = cur.execute('SELECT * FROM Users WHERE Username=%s', [username])
 
         if result > 0:
             data = cur.fetchone()
@@ -52,16 +52,24 @@ def login():
 
 @app.route('/register', methods=['GET','POST'])
 def register():
+    majorlist = []
+    connection = db.connection
+    cur = connection.cursor()
+    cur.execute('SELECT * FROM majors;')
+    majorlist = cur.fetchall()
+    db.connection.commit()
+    cur.close()
+
     if request.method == 'POST':
         username = str(request.form['username'])
         email = str(request.form['email'])
         password = str(request.form['password'])
         major_name = str(request.form['major_name'])
-        # con_password = str(request.form['con_password'])
 
         connection = db.connection
         cur = connection.cursor()
         result = cur.execute("SELECT * FROM Users WHERE Username=%s",[username])
+
 
         if result > 0:
             flash('Username already exists', 'danger')
@@ -74,12 +82,19 @@ def register():
 
         cur.close()
         return redirect(url_for('login'))
-    return render_template('register.html')
+    return render_template('register.html', majorlist=majorlist)
 
 
 @app.route('/home', methods=['GET', 'POST'])
 def home():
-    return render_template('home.html')
+    majorlist = []
+    connection = db.connection
+    cur = connection.cursor()
+    cur.execute('SELECT * FROM majors;')
+    majorlist = cur.fetchall()
+    db.connection.commit()
+    cur.close()
+    return render_template('home.html',majorlist=majorlist)
 
 
 
