@@ -1,6 +1,5 @@
 from flask import Flask, render_template, redirect, request, flash, url_for, session, g
 from flask_mysqldb import MySQL
-from flask_wtf import FlaskForm
 
 
 
@@ -10,10 +9,10 @@ app = Flask(__name__)
 
 #MySQL config
 app.secret_key = '123456789'
-app.config['MYSQL_HOST'] = 'cs336-khp51-grader.creufxlr206t.us-east-2.rds.amazonaws.com'
-app.config['MYSQL_USER'] = 'cs336khp51grader'
-app.config['MYSQL_PASSWORD'] = 'cs336khp51'
-app.config['MYSQL_DB'] = 'ratemyclasses'
+app.config['MYSQL_HOST'] = 'ratemyclass.cej3ioszzgpd.us-east-1.rds.amazonaws.com'
+app.config['MYSQL_USER'] = 'ratemyclass'
+app.config['MYSQL_PASSWORD'] = 'ratemyclass'
+app.config['MYSQL_DB'] = 'ratemyclass'
 app.config['MYSQL_CURSORCLASS'] = 'DictCursor' #this config line returns queries we execute as dictionaries, default is to return as a tuple; ex. User Login
 
 db = MySQL(app)
@@ -82,5 +81,5 @@ def home():
 
 
 
-# if __name__ == '__main__':
-#     app.run(debug=True)
+if __name__ == '__main__':
+    app.run(debug=True)
