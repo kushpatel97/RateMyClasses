@@ -1,6 +1,7 @@
 from flask import Flask, render_template, redirect, request, flash, url_for, session, g
 from flask_mysqldb import MySQL
 from functools import wraps
+from util import *
 import os
 
 
@@ -37,6 +38,9 @@ def login():
         session.pop('user', None)
         username = str(request.form['username'])
         password = str(request.form['password'])
+
+        if username.lower() == 'admin' and password.lower() == 'admin':
+            return redirect(url_for('admin'))
 
         connection = db.connection
         cur = connection.cursor()
@@ -103,24 +107,127 @@ def logout():
     flash('You just logged out', 'success')
     return redirect(url_for('login'))
 
+@app.errorhandler(500)
+def page_not_found(e):
+    return render_template("review.html")
+
+
+@app.route('/createReview', methods=['GET', 'POST'])
+def createReview():
+    user = g.user
+    connection = db.connection
+    cur = connection.cursor()
+    cur.execute('SELECT Class_name, Class_id, dept_id FROM ratemyclass.Classes;')
+    classes = cur.fetchall()
+    db.connection.commit()
+    cur.close()
+    if request.method == 'POST':
+        user = str(request.form['user'])
+        classN = str(request.form['Class'])
+        semester = str(request.form['Semester'])
+        year = str(request.form['Year'])
+        diff = str(request.form['Difficulty'])
+        knowled = str(request.form['Knowledge'])
+        review = str(request.form['Review'])
+
+        if user == 'None':
+            flash('Please fill out the username field with your username')
+            return render_template('review.html', classes=classes, user=user)
+
+        cur = connection.cursor()
+        result = cur.execute("SELECT * FROM Reviews WHERE Username = %s and Class_id = %s", [user,classN])
+
+        if result > 0:
+            flash('You already submitted a post with this username', 'danger')
+            return render_template('review.html', classes=classes, user=user)
+
+        cur.close()
+
+        user = g.user
+        print(classN, semester, year, diff, knowled, review)
+
+        cur = connection.cursor()
+        cur.execute('INSERT INTO Reviews (Class_id, Difficulty_rating, knowledge_gain_rating, review, Username, Review_year, Review_semester) VALUES (%s, %s, %s, %s, %s, %s, %s)', (classN, diff, knowled, review, user, year, semester))
+        db.connection.commit()
+        cur.close()
+        flash('Submitted Review!','success')
+
+        return redirect(url_for('home'))
+
+    return render_template('review.html', classes=classes, user=user)
+
 @app.route('/home', methods=['GET', 'POST'])
 def home():
-    if g.user:
-        majorlist = []
+
+        dept_id = ''
+        class_name = ''
+        classlist = []
+        cList = []
+        avg=[]
+        avg2=[]
+        avg_diff = ''
+        avg_kno = ''
         connection = db.connection
         cur = connection.cursor()
-        cur.execute('SELECT * FROM majors;')
-        majorlist = cur.fetchall()
+        cur.execute('SELECT * FROM Classes;')
+        classlist = cur.fetchall()
         db.connection.commit()
         cur.close()
 
-        test = g.user
-        return render_template('home.html', majorlist=majorlist, test=test)
-    else:
-        flash('Use the front door!','danger')
-        return redirect(url_for('login'))
+        # dicts = clean(deptlist)
+
+        if request.method == 'POST':
+            class_id = str(request.form['class_id'])
 
 
+            cur = connection.cursor()
+            cur.execute("SELECT * FROM Reviews WHERE class_id = %s",[class_id])
+            cList = cur.fetchall()
+            cur.execute("SELECT avg(Difficulty_rating), avg(knowledge_gain_rating) FROM Reviews where Class_id = %s", [class_id])
+            avg = cur.fetchall()
+            db.connection.commit()
+            cur.close()
+        # print(deptlist)
+        # print(deptlist[0]['dept_id'])
+            for i in avg:
+                avg2.append(i)
+            avg_diff = avg2[0]['avg(Difficulty_rating)']
+            avg_kno = avg2[0]['avg(knowledge_gain_rating)']
 
+        return render_template('home.html', classlist=classlist, cList = cList, avg_diff=avg_diff, avg_kno=avg_kno)
+    # else:
+    #     flash('Use the front door!','danger')
+    #     return redirect(url_for('login'))
+
+
+@app.route('/admin', methods=['GET', 'POST'])
+def admin():
+    g.user = admin
+    userlist = []
+    selected = []
+    connection = db.connection
+    cur = connection.cursor()
+    cur.execute("SELECT * FROM Users WHERE Users.Username NOT IN(SELECT Username FROM Reviews);")
+    userlist = cur.fetchall()
+    # db.connection.commit()
+    cur.close()
+
+    if request.method == 'POST':
+        selected = request.form.getlist('user_box')
+        print(selected)
+        connection = db.connection
+        cur = connection.cursor()
+        for user in selected:
+                cur.execute("DELETE FROM Users WHERE Username = %s;",[user])
+                db.connection.commit()
+        cur.close()
+        message = 'Users: {} deleted'.format(selected)
+        flash(message,'success')
+        return render_template('admin.html', userlist=userlist)
+
+    return render_template('admin.html', userlist = userlist)
+
+
+#
 # if __name__ == '__main__':
 #     app.run(debug=True)

@@ -1,13 +1,87 @@
 {% extends "layout.html" %}
-
+{% block script %}
+{% endblock %}
 
 {% block body %}
-    <h1>Home</h1>
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+      {% for message in messages %}
+        <div class="alert alert-success" role="alert">{{ message }}</div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+    <form method="post">
+      <div class="form-row">
+        <div class="col">
+            <select id="A" name="class_id" class="form-control" required>
+                <option selected="true" disabled="disabled" value="">Choose Class...</option>
+                {% for i in classlist %}
+                    <option value="{{ i.Class_id }}">{{i.dept_id}}:{{ i.Class_id }} -- {{i.Class_name}}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-6">
+        </div>
+      </div>
+      <br>
+
+        <div class="form-row">
+            <div class="col"><button type="submit" class="btn btn-primary">Search</button></div>
+            <div class="col-6"></div>
+        </div>
+
+    </form>
+</div>
+
+<hr>
+
+<div class="container-fluid">
+<div class="row">
+    <div class="col">
+        <input class="form-control-plaintext" type="text" placeholder="Average Difficulty: {{ avg_diff }}" readonly>
+        <input class="form-control-plaintext" type="text" placeholder="Average Knowledge: {{ avg_kno }}" readonly>
 
 
-<!--{% for i in temp %}-->
-        <!--{{ i }} <br>-->
-<!--{% endfor %}-->
 
-{{ test }}
-{% endblock %}
+    </div>
+    <div class="col-5">
+        {% for i in cList %}
+        <div class="card p-3">
+            <div class="card-block">
+
+                <div class="row">
+                    <div class="col-3">
+                        <h4 class="card-title">{{ i.Username }}</h4>
+                    </div>
+                    <div class="col-5">
+
+                    </div>
+                    <div class="col">
+                        <h4 class="card-title">{{ i.Review_semester }} {{ i.Review_year}}</h4>
+                    </div>
+
+                </div>
+                <h6 class="card-subtitle mb-2 text-muted">Difficulty: {{ i.Difficulty_rating }}</h6>
+                <h6 class="card-subtitle mb-2 text-muted">Knowledge Gained: {{i.knowledge_gain_rating}}</h6>
+                <p class="card-text">{{ i.review }}</p>
+                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+            </div>
+        </div>
+        <hr>
+        {% endfor %}
+    </div>
+    <div class="col"></div>
+</div>
+    <br>
+    <br>
+    <!--<div class="card-columns">-->
+        <!--<div class="card p-3">-->
+            <!--<div class="card-block">-->
+                <!--<h4 class="card-title">Card title</h4>-->
+                <!--<h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>-->
+                <!--<p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>-->
+                <!--<p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+    {% endblock %}

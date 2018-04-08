@@ -1,0 +1,86 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<!--{{ classes }}-->
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+      {% for message in messages %}
+        <div class="alert alert-danger" role="alert">{{ message }}</div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+<div class="row">
+    <div class="col"></div>
+    <div class="col-9">
+        <div class="card">
+          <div class="card-body">
+              <form method="post">
+                  <div class="row">
+                      <div class="col-4">
+                          <label for="username">Username</label>
+                            <input type="text" class="form-control" name="user" id="username" placeholder="{{user}}" value="{{user}}">
+                      </div>
+                      <div class="col"></div>
+                      <div class="col-5">
+                          <select name="Class" class="form-control" required>
+                              <option selected="true" disabled="disabled" value="">Class Name</option>
+                              {% for class in classes %}
+                                <option value="{{ class.Class_id }}">{{class.dept_id}}:{{ class.Class_id }} -- {{class.Class_name}}</option>
+                              {% endfor %}
+                          </select>
+                      </div>
+                  </div>
+
+<hr>
+              <div class="row">
+                  <div class="col-3">
+                      <select name="Semester" class="form-control" required>
+                            <option selected="true" disabled="disabled" value="">Semester</option>
+                            <option value="Fall">Fall</option>
+                            <option value="Spring">Spring</option>
+                      </select>
+                  </div>
+                  <div class="col-3">
+                      <select name="Year" class="form-control" required>
+                          <option selected="true" disabled="disabled" value="">Year</option>
+                          <option value="2017">2017</option>
+                          <option value="2018">2018</option>
+                      </select>
+                  </div>
+                  <div class="col-3">
+                      <select name="Difficulty" class="form-control" required>
+                            <option selected="true" disabled="disabled" value="">Difficulty</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                      </select>
+                  </div>
+                  <div class="col-3">
+                      <select name="Knowledge" class="form-control" required>
+                            <option selected="true" disabled="disabled" value="">Knowledge Gained</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                      </select>
+                  </div>
+              </div>
+
+            <br>
+            <h6 class="card-subtitle mb-2 text-muted">Leave a Review</h6>
+            <div class="form-group">
+                <textarea name="Review" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+              </form>
+          </div>
+        </div>
+    </div>
+
+    <div class="col"></div>
+
+</div>
+{% endblock %}

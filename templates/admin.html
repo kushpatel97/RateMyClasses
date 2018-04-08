@@ -1,0 +1,55 @@
+{% extends "layout.html" %}
+{% block script %}
+{% endblock %}
+
+{% block links %}
+{% endblock %}
+
+{% block body %}
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+      {% for message in messages %}
+        <div class="alert alert-success" role="alert">{{ message }}</div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+
+
+
+<h1>
+    Here you can delete users who haven't created a post
+</h1>
+<div class="container-fluid">
+    <form method="post">
+        <div class="row">
+            <div class="col-9"></div>
+            <div class="col"><button type="submit" class="btn btn-danger btn-block">Delete</button></div>
+        </div>
+        <br>
+
+    <table class="table">
+      <thead>
+        <tr>
+            <th scope="col"></th>
+            <th scope="col">Username</th>
+            <th scope="col">Email</th>
+            <th scope="col">Password</th>
+            <th scope="col">Major</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for users in userlist %}
+        <tr>
+            <td><input type="checkbox" class="form-check-input" name="user_box" value="{{ users.Username }}"></td>
+            <td>{{ users.Username }}</td>
+            <td>{{ users.Email }}</td>
+            <td>{{ users.Password }}</td>
+            <td>{{ users.major_name }}</td>
+        </tr>
+      {% endfor %}
+
+      </tbody>
+    </table>
+        </form>
+</div>
+{% endblock %}

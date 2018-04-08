@@ -5,10 +5,8 @@
 
     <title>Rate My Classes | CS336</title>
 
-    <!--<link href ="{{ url_for('static', filename='css/bootstrap.css') }}" rel="stylesheet">-->
+    <!--<link href ="{{ url_for('static', filename='css/home.css') }}" rel="stylesheet">-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>-->
-    <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
 </head>
 <body>
 
@@ -17,17 +15,27 @@
     <div class="navbar-header">
       <a class="navbar-brand" href="{{ url_for('home') }}">Rate My Classes</a>
     </div>
+      {% block links %}
+      <ul class="nav navbar-nav navbar-right">
+        <li><a class="btn btn-primary" href="{{ url_for('createReview') }}">New Review</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a class="btn btn-warning" href="{{ url_for('home') }}">Read Review</a></li>
+      </ul>
+      {% endblock %}
     <ul class="nav navbar-nav navbar-right">
-      <li><a href="{{ url_for('logout') }}">Log Out</a></li>
+      <li><a class="btn btn-success" href="{{ url_for('logout') }}">Log Out</a></li>
     </ul>
+
 
   </div>
 </nav>
-
-
-<div class="container">
+<br>
+<hr>
+<div class="container-fluid">
     {% block body %}
-    {% endblock %}
+
+{% endblock %}
 </div>
 
 </body>
