@@ -13,7 +13,13 @@
 <body>
 
 <div class="login-page">
-
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      {% for message in messages %}
+        <div class="alert alert-danger" role="alert">{{ message }}</div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
   <div class="form">
         <h1>Login</h1>
     <form class="login-form" method="post">

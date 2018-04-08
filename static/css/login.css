@@ -26,7 +26,8 @@
   box-sizing: border-box;
   font-size: 14px;
 }
-.form select option {
+
+.form select {
   font-family: "Roboto", sans-serif;
   outline: 0;
   background: #f2f2f2;
@@ -37,6 +38,7 @@
   box-sizing: border-box;
   font-size: 14px;
 }
+
 .form button {
   font-family: "Roboto", sans-serif;
   text-transform: uppercase;
@@ -86,6 +88,10 @@
   font-weight: 300;
   color: #1a1a1a;
 }
+.button {
+    margin-top: 0.5em;
+}
+
 .container .info span {
   color: #4d4d4d;
   font-size: 12px;
@@ -99,10 +105,10 @@
 }
 body {
   background: #76b852; /* fallback for old browsers */
-  background: -webkit-linear-gradient(right, #76b852, #8DC26F);
-  background: -moz-linear-gradient(right, #76b852, #8DC26F);
-  background: -o-linear-gradient(right, #76b852, #8DC26F);
-  background: linear-gradient(to left, #76b852, #8DC26F);
+  background: -webkit-linear-gradient(right, #5F6A72, #CC0033);
+  background: -moz-linear-gradient(right, #5F6A72, #CC0033);
+  background: -o-linear-gradient(right, #5F6A72, #CC0033);
+  background: linear-gradient(to left, #5F6A72, #CC0033);
   font-family: "Roboto", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

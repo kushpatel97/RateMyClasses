@@ -10,7 +10,13 @@
 <body>
 
 <div class="login-page">
-
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      {% for message in messages %}
+        <div class="alert alert-danger" role="alert">{{ message }}</div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
   <div class="form">
     <h1>Register</h1>
     <form class="register-form" action="/register" method="post">
@@ -20,6 +26,7 @@
       <input name="password" type="password" class="form-control" placeholder="Password">
       <!--<input id="majorname" name="major_name" type="text" class="form-control" placeholder="School Major">-->
       <select name="major_name" class="form-control">
+        <option selected="true" disabled="disabled">Select Major</option>
         {% for i in majorlist %}
           <option value="{{ i.major_name }}">{{ i.major_name }}</option>
         {% endfor %}
