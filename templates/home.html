@@ -1,5 +1,18 @@
 {% extends "layout.html" %}
 {% block script %}
+<script type="text/javascript">
+
+        $(function () {
+            var clist = [
+                {% for i in classlist %}
+                    {value: "{{i.Class_id}}", label: "{{i.dept_id}}:{{i.Class_id}} - {{i.Class_name}}"},
+                {% endfor %}
+            ];
+            $("#clist").autocomplete({ source: clist });
+        });
+
+</script>
+
 {% endblock %}
 
 {% block body %}
@@ -10,25 +23,19 @@
       {% endfor %}
     {% endif %}
   {% endwith %}
+<div class="continer-fluid">
     <form method="post">
       <div class="form-row">
         <div class="col">
-            <select id="A" name="class_id" class="form-control" required>
-                <option selected="true" disabled="disabled" value="">Choose Class...</option>
-                {% for i in classlist %}
-                    <option value="{{ i.Class_id }}">{{i.dept_id}}:{{ i.Class_id }} -- {{i.Class_name}}</option>
-                {% endfor %}
-            </select>
-        </div>
-        <div class="col-6">
-        </div>
-      </div>
-      <br>
 
-        <div class="form-row">
-            <div class="col"><button type="submit" class="btn btn-primary">Search</button></div>
-            <div class="col-6"></div>
+            <input type="text" id="clist" class="form-control" name="class_id" autocomplete="off" placeholder="Search for a Class" required/>
+
         </div>
+          <div class="col3">
+              <div class="col"><button type="submit" class="btn btn-primary">Search</button></div>
+          </div>
+        <div class="col-3"></div>
+      </div>
 
     </form>
 </div>
@@ -38,10 +45,6 @@
 <div class="container-fluid">
 <div class="row">
     <div class="col">
-        <input class="form-control-plaintext" type="text" placeholder="Average Difficulty: {{ avg_diff }}" readonly>
-        <input class="form-control-plaintext" type="text" placeholder="Average Knowledge: {{ avg_kno }}" readonly>
-
-
 
     </div>
     <div class="col-5">
@@ -70,7 +73,10 @@
         <hr>
         {% endfor %}
     </div>
-    <div class="col"></div>
+    <div class="col">
+        <input class="form-control-plaintext" type="text" placeholder="Average Difficulty: {{ avg_diff }}" readonly>
+        <input class="form-control-plaintext" type="text" placeholder="Average Knowledge: {{ avg_kno }}" readonly>
+    </div>
 </div>
     <br>
     <br>

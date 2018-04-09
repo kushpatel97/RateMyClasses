@@ -1,8 +1,8 @@
-from flask import Flask, render_template, redirect, request, flash, url_for, session, g
+from flask import Flask, render_template, redirect, request, flash, url_for, session, g, jsonify
 from flask_mysqldb import MySQL
 from functools import wraps
 from util import *
-import os
+import os, json
 
 
 
@@ -109,6 +109,7 @@ def logout():
 
 @app.errorhandler(500)
 def page_not_found(e):
+    flash('Refresh Page and search for review!')
     return render_template("review.html")
 
 
@@ -171,9 +172,9 @@ def home():
         cur = connection.cursor()
         cur.execute('SELECT * FROM Classes;')
         classlist = cur.fetchall()
+
         db.connection.commit()
         cur.close()
-
         # dicts = clean(deptlist)
 
         if request.method == 'POST':
@@ -198,6 +199,8 @@ def home():
     # else:
     #     flash('Use the front door!','danger')
     #     return redirect(url_for('login'))
+
+
 
 
 @app.route('/admin', methods=['GET', 'POST'])
